@@ -1,5 +1,7 @@
+require 'rjb'
+
 folder = File.expand_path("../../", File.dirname(__FILE__))
-class_path = Dir["#{folder}/lib/java_libs/*.jar"].map { |path| File::PATH_SEPARATOR + File.expand_path(path) }.sort.join('')
+class_path = Dir["#{folder}/java_jars/*.jar"].map { |path| File::PATH_SEPARATOR + File.expand_path(path) }.sort.join('')
 
 Rjb::load class_path
 FILE_OUTPUT_STREAM = Rjb::import('java.io.FileOutputStream')

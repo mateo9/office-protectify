@@ -1,6 +1,6 @@
 require "office/protectify/version"
 require 'office/protectify/java_initializer'
-require 'xlsx_protectify'
+require 'office/protectify/xlsx_protectify'
 require 'rjb'
 
 module Office
