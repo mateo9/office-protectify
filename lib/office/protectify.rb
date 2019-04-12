@@ -1,4 +1,5 @@
 require "office/protectify/version"
+require 'rjb'
 
 module Office
   module Protectify
