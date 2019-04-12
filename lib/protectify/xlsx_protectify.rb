@@ -1,17 +1,17 @@
-require 'java_initializer'
 
 module Protectify
     class XlsxProtectify
         def initialize(path, password)
             @path = path
             @password = password
+            call
         end
 
         def call
             initialize_java_class
             encryptor_password
             write_into_encrypted_output_stream
-            file_output_streamq
+            file_output_stream
         end
 
         private
@@ -19,11 +19,11 @@ module Protectify
         attr_reader :path, :password
 
         def initialize_java_class
-            @fs = POI_FILE_SYSTEM.new
+            @file_system = POI_FILE_SYSTEM.new
             @encryption_mode = ENCRYPTION_MODE
             @info = ENCRYPTION_INFO.new(@encryption_mode.agile)
-            @fj = FILE_JAVA.new(path)
-            @is = FILE_INPUT_STREAM.new(@fj)
+            @file_java = FILE_JAVA.new(path)
+            @input_stream = FILE_INPUT_STREAM.new(@file_java)
           end
 
           def encryptor_password
@@ -32,23 +32,17 @@ module Protectify
           end
 
           def write_into_encrypted_output_stream
-            @os = @enc.getDataStream(@fs)
-            IO_UTILS.copy(@is, @os)
-            @os.close
-            @is.close
+            @output_stream = @enc.getDataStream(@file_system)
+            IO_UTILS.copy(@input_stream, @output_stream)
+            @output_stream.close
+            @input_stream.close
           end
 
           def file_output_stream
-            delete_file
-            @path = FILE_JAVA.new(path)
-            @fos = FILE_OUTPUT_STREAM.new(@path)
-            @fs.writeFilesystem(@fos)
-            @fos.close
-            @fs.close
-          end
-
-          def delete_file
-            File.delete(path)
+            file_output_stream = FILE_OUTPUT_STREAM.new(path)
+            @file_system.writeFilesystem(file_output_stream)
+            file_output_stream.close
+            @file_system.close
           end
     end
 end
