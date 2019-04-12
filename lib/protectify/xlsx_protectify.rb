@@ -1,4 +1,4 @@
-require 'java_initializer.rb'
+require 'java_initializer'
 
 module Protectify
     class XlsxProtectify
@@ -11,7 +11,7 @@ module Protectify
             initialize_java_class
             encryptor_password
             write_into_encrypted_output_stream
-            file_output_stream
+            file_output_streamq
         end
 
         private
